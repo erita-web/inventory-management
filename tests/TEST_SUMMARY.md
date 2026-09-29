@@ -2,7 +2,7 @@
 
 ## Test Coverage Overview
 
-All backend API tests are passing with **55 tests** covering the entire application functionality.
+All backend API tests are passing with **69 tests** covering the entire application functionality.
 
 ## Test Suites
 
@@ -70,6 +70,22 @@ All backend API tests are passing with **55 tests** covering the entire applicat
 - ✅ Root endpoint returns API info
 - ✅ Message and version structure
 
+### 8. Restocking Endpoints (29 tests, `test_restocking.py`)
+- ✅ Demand forecast items carry unit cost, stock on hand, lead time and supplier
+- ✅ Recommendation structure, default budget and slider range when no budget is sent
+- ✅ Budget is never exceeded (several budgets) and line costs add up to the total
+- ✅ Items are ranked most urgent first (rising demand, then largest uncovered share)
+- ✅ Items with enough stock are never recommended
+- ✅ The first partly-covered item takes the rest of the budget and buying stops
+- ✅ An item too expensive for even one unit is skipped, not treated as a stop
+- ✅ Invalid budgets (negative, non-numeric, missing) return 422
+- ✅ Placing an order: order lead time = longest item lead time, delivery date follows
+- ✅ Submitted orders are listed newest first with increasing order numbers
+- ✅ A budget that buys nothing is refused (400) and nothing is stored
+- ✅ Orders are saved to a file and come back after a simulated restart
+- ✅ A corrupt or wrongly shaped orders file stops start-up with a clear message and is left untouched
+- Tests use a temporary orders file, so they never touch real saved orders
+
 ## Key Testing Principles
 
 ### ✅ No Hardcoded Values
@@ -101,9 +117,9 @@ python -m pytest backend/ -v
 ```
 
 ## Test Results
-- **Total Tests**: 55
-- **Passed**: 55 ✅
+- **Total Tests**: 69
+- **Passed**: 69 ✅
 - **Failed**: 0
-- **Warnings**: 3 (configuration-related, non-critical)
+- **Warnings**: 1 (a `starlette`/`httpx` deprecation notice, non-critical)
 
 All tests validate the **actual implementation** without cheating or hardcoding success values!

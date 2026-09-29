@@ -6,6 +6,7 @@ export default {
     orders: 'Orders',
     finance: 'Finance',
     demandForecast: 'Demand Forecast',
+    restocking: 'Restocking',
     companyName: 'Catalyst Components',
     subtitle: 'Inventory Management System'
   },
@@ -112,6 +113,16 @@ export default {
     onTimeDelivery: 'On-Time Delivery',
     itemsCount: '{count} items',
     quantity: 'Qty',
+    submittedOrders: 'Submitted Orders',
+    submittedOrdersDescription: 'Restock orders placed from the Restocking tab',
+    submitted: {
+      submittedOn: 'Submitted',
+      supplier: 'Supplier',
+      totalCost: 'Total Cost',
+      leadTime: 'Lead Time',
+      empty: 'No restock orders submitted yet. Place one from the Restocking tab.',
+      loadFailed: 'Could not load submitted orders'
+    },
     table: {
       orderNumber: 'Order Number',
       orderId: 'Order ID',
@@ -127,6 +138,44 @@ export default {
       expectedDelivery: 'Expected Delivery',
       actualDelivery: 'Actual Delivery'
     }
+  },
+
+  // Restocking
+  restocking: {
+    title: 'Restocking',
+    description: 'Set a budget and get recommended items to restock, based on the demand forecast',
+    budget: 'Budget',
+    budgetHelp: 'Drag the slider to set how much you can spend',
+    recommendedSpend: 'Recommended Spend',
+    remainingBudget: 'Remaining Budget',
+    itemsToOrder: 'Items to Order',
+    fullRestockCost: 'Cost to cover every shortfall',
+    recommendedItems: 'Recommended Items',
+    noRecommendations: 'This budget is too low to buy any item. Increase the budget to see recommendations.',
+    table: {
+      item: 'Item',
+      supplier: 'Supplier',
+      trend: 'Demand Trend',
+      onHand: 'On Hand',
+      forecast: 'Forecast (30 days)',
+      orderQty: 'Order Qty',
+      unitCost: 'Unit Cost',
+      lineCost: 'Cost',
+      leadTime: 'Lead Time',
+      coverage: 'Coverage'
+    },
+    fullyCovered: 'Covers shortfall',
+    partial: 'Partial',
+    notFunded: 'Not funded at this budget',
+    notFundedHelp: 'These items are short on stock but did not fit in the budget:',
+    shortBy: 'Short by {qty} @ {price}',
+    placeOrder: 'Place Order',
+    placingOrder: 'Placing order...',
+    orderPlaced: 'Order {orderNumber} placed. Expected delivery in {days} days.',
+    viewInOrders: 'View in Orders',
+    orderFailed: 'Could not place the order: {message}',
+    loadFailed: 'Failed to load recommendations',
+    days: '{count} days'
   },
 
   // Finance/Spending
@@ -206,7 +255,8 @@ export default {
     backordered: 'Backordered',
     inStock: 'In Stock',
     lowStock: 'Low Stock',
-    adequate: 'Adequate'
+    adequate: 'Adequate',
+    submitted: 'Submitted'
   },
 
   // Trends

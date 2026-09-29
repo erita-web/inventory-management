@@ -51,5 +51,9 @@ logs/
 # Playwright MCP artifacts
 .playwright-mcp/
 
+# Submitted restock orders (runtime data, written by the server)
+server/data/restock_orders.json
+server/data/*.tmp
+
 # Environment variables
 .env

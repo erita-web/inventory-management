@@ -6,7 +6,11 @@
     "current_demand": 300,
     "forecasted_demand": 450,
     "trend": "increasing",
-    "period": "Next 30 days"
+    "period": "Next 30 days",
+    "unit_cost": 24.99,
+    "quantity_on_hand": 120,
+    "lead_time_days": 7,
+    "supplier": "Apex Industrial Supply"
   },
   {
     "id": "2",
@@ -15,7 +19,11 @@
     "current_demand": 150,
     "forecasted_demand": 152,
     "trend": "stable",
-    "period": "Next 30 days"
+    "period": "Next 30 days",
+    "unit_cost": 89.5,
+    "quantity_on_hand": 90,
+    "lead_time_days": 14,
+    "supplier": "Northline Bearings"
   },
   {
     "id": "3",
@@ -24,7 +32,11 @@
     "current_demand": 500,
     "forecasted_demand": 600,
     "trend": "increasing",
-    "period": "Next 30 days"
+    "period": "Next 30 days",
+    "unit_cost": 12.75,
+    "quantity_on_hand": 200,
+    "lead_time_days": 5,
+    "supplier": "Sealtech Components"
   },
   {
     "id": "4",
@@ -33,7 +45,11 @@
     "current_demand": 50,
     "forecasted_demand": 35,
     "trend": "decreasing",
-    "period": "Next 30 days"
+    "period": "Next 30 days",
+    "unit_cost": 445.0,
+    "quantity_on_hand": 60,
+    "lead_time_days": 21,
+    "supplier": "Torque Dynamics"
   },
   {
     "id": "5",
@@ -42,7 +58,11 @@
     "current_demand": 800,
     "forecasted_demand": 950,
     "trend": "increasing",
-    "period": "Next 30 days"
+    "period": "Next 30 days",
+    "unit_cost": 8.25,
+    "quantity_on_hand": 300,
+    "lead_time_days": 4,
+    "supplier": "ClearFlow Filtration"
   },
   {
     "id": "6",
@@ -51,7 +71,11 @@
     "current_demand": 120,
     "forecasted_demand": 121,
     "trend": "stable",
-    "period": "Next 30 days"
+    "period": "Next 30 days",
+    "unit_cost": 156.0,
+    "quantity_on_hand": 40,
+    "lead_time_days": 18,
+    "supplier": "Meridian Valve Works"
   },
   {
     "id": "7",
@@ -60,7 +84,11 @@
     "current_demand": 250,
     "forecasted_demand": 252,
     "trend": "stable",
-    "period": "Next 30 days"
+    "period": "Next 30 days",
+    "unit_cost": 18.99,
+    "quantity_on_hand": 420,
+    "lead_time_days": 9,
+    "supplier": "Voltix Power"
   },
   {
     "id": "8",
@@ -69,7 +97,11 @@
     "current_demand": 180,
     "forecasted_demand": 182,
     "trend": "stable",
-    "period": "Next 30 days"
+    "period": "Next 30 days",
+    "unit_cost": 34.0,
+    "quantity_on_hand": 70,
+    "lead_time_days": 10,
+    "supplier": "Kestrel Sensors"
   },
   {
     "id": "9",
@@ -78,6 +110,10 @@
     "current_demand": 95,
     "forecasted_demand": 96,
     "trend": "stable",
-    "period": "Next 30 days"
+    "period": "Next 30 days",
+    "unit_cost": 210.0,
+    "quantity_on_hand": 30,
+    "lead_time_days": 12,
+    "supplier": "Halcyon Electronics"
   }
 ]
