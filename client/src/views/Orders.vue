@@ -29,6 +29,68 @@
 
       <div class="card">
         <div class="card-header">
+          <div>
+            <h3 class="card-title">{{ t('orders.submittedOrders') }} ({{ submittedOrders.length }})</h3>
+            <p class="card-description">{{ t('orders.submittedOrdersDescription') }}</p>
+          </div>
+        </div>
+        <div v-if="submittedLoading" class="submitted-message">{{ t('common.loading') }}</div>
+        <div v-else-if="submittedError" class="submitted-message submitted-error">
+          {{ t('orders.submitted.loadFailed') }}
+        </div>
+        <div v-else-if="submittedOrders.length === 0" class="submitted-message">
+          {{ t('orders.submitted.empty') }}
+        </div>
+        <div v-else class="table-container submitted-table-container">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th class="col-order-number">{{ t('orders.table.orderNumber') }}</th>
+                <th class="col-date">{{ t('orders.submitted.submittedOn') }}</th>
+                <th class="col-items">{{ t('orders.table.items') }}</th>
+                <th class="col-value">{{ t('orders.submitted.totalCost') }}</th>
+                <th class="col-lead-time">{{ t('orders.submitted.leadTime') }}</th>
+                <th class="col-date">{{ t('orders.table.expectedDelivery') }}</th>
+                <th class="col-status">{{ t('orders.table.status') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="order in submittedOrders" :key="order.id">
+                <td class="col-order-number"><strong>{{ order.order_number }}</strong></td>
+                <td class="col-date">{{ formatDate(order.submitted_at) }}</td>
+                <td class="col-items">
+                  <details class="items-details">
+                    <summary class="items-summary">
+                      {{ t('orders.itemsCount', { count: order.items.length }) }}
+                    </summary>
+                    <div class="items-dropdown">
+                      <div v-for="item in order.items" :key="item.sku" class="item-entry">
+                        <span class="item-name">{{ translateProductName(item.name) }}</span>
+                        <span class="item-meta">
+                          {{ t('orders.quantity') }}: {{ item.quantity }}
+                          &middot; {{ t('orders.submitted.supplier') }}: {{ item.supplier }}
+                          &middot; {{ t('orders.submitted.leadTime') }}: {{ t('restocking.days', { count: item.lead_time_days }) }}
+                        </span>
+                      </div>
+                    </div>
+                  </details>
+                </td>
+                <td class="col-value"><strong>{{ formatCurrency(order.total_cost, currentCurrency) }}</strong></td>
+                <td class="col-lead-time">
+                  <span class="lead-time">{{ t('restocking.days', { count: order.lead_time_days }) }}</span>
+                </td>
+                <td class="col-date">{{ formatDate(order.expected_delivery) }}</td>
+                <td class="col-status">
+                  <span class="badge info">{{ t('status.submitted') }}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
           <h3 class="card-title">{{ t('orders.allOrders') }} ({{ orders.length }})</h3>
         </div>
         <div class="table-container">
@@ -83,6 +145,7 @@ import { ref, onMounted, watch, computed } from 'vue'
 import { api } from '../api'
 import { useFilters } from '../composables/useFilters'
 import { useI18n } from '../composables/useI18n'
+import { formatCurrency } from '../utils/currency'
 
 export default {
   name: 'Orders',
@@ -124,7 +187,32 @@ export default {
       }
     }
 
-    // Watch for filter changes and reload data
+    // Submitted restock orders are loaded on their own (separate loading/error
+    // state and try/catch) so a failure here can never break or hide the main
+    // orders table, and vice versa.
+    const submittedOrders = ref([])
+    const submittedLoading = ref(true)
+    const submittedError = ref(false)
+
+    const loadSubmittedOrders = async () => {
+      try {
+        submittedLoading.value = true
+        submittedError.value = false
+        // Keep the API order as-is: it already returns the newest order first
+        submittedOrders.value = await api.getRestockingOrders()
+      } catch (err) {
+        // Only a flag is stored; the message is translated in the template so it
+        // follows a language switch
+        submittedError.value = true
+        console.error('Failed to load submitted orders:', err)
+      } finally {
+        submittedLoading.value = false
+      }
+    }
+
+    // Watch for filter changes and reload data. Submitted restock orders are
+    // deliberately not reloaded here: the global filters (period, location,
+    // category, status) describe customer orders, not restock orders.
     watch([selectedPeriod, selectedLocation, selectedCategory, selectedStatus], () => {
       loadOrders()
     })
@@ -153,13 +241,21 @@ export default {
       })
     }
 
-    onMounted(loadOrders)
+    onMounted(() => {
+      loadOrders()
+      loadSubmittedOrders()
+    })
 
     return {
       t,
+      currentCurrency,
+      formatCurrency,
       loading,
       error,
       orders,
+      submittedOrders,
+      submittedLoading,
+      submittedError,
       getOrdersByStatus,
       getOrderStatusClass,
       formatDate,
@@ -201,6 +297,48 @@ export default {
 
 .col-value {
   width: 120px;
+}
+
+.col-lead-time {
+  width: 130px;
+}
+
+/* Submitted orders card */
+.card-description {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.submitted-message {
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.submitted-error {
+  color: #991b1b;
+}
+
+/* The items dropdown is absolutely positioned, and the default overflow-x: auto
+   on .table-container would clip it to the row height (this table often has only
+   one or two rows), so let it overflow visibly here. */
+.submitted-table-container {
+  overflow: visible;
+}
+
+/* Lead time is the point of this section, so it is larger and stands out from
+   the plain text in the other columns */
+.lead-time {
+  display: inline-block;
+  padding: 0.25rem 0.625rem;
+  border-radius: 6px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  font-size: 1rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 /* Items details styling */

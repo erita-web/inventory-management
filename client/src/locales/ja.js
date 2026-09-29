@@ -6,6 +6,7 @@ export default {
     orders: '注文',
     finance: '財務',
     demandForecast: '需要予測',
+    restocking: '補充発注',
     companyName: '触媒コンポーネンツ',
     subtitle: '在庫管理システム'
   },
@@ -112,6 +113,16 @@ export default {
     onTimeDelivery: '定時配達',
     itemsCount: '{count}件',
     quantity: '数量',
+    submittedOrders: '発注済みの補充注文',
+    submittedOrdersDescription: '「補充発注」タブから発注した注文',
+    submitted: {
+      submittedOn: '発注日',
+      supplier: 'サプライヤー',
+      totalCost: '合計金額',
+      leadTime: 'リードタイム',
+      empty: 'まだ補充注文はありません。「補充発注」タブから発注できます。',
+      loadFailed: '発注済みの注文を読み込めませんでした'
+    },
     table: {
       orderNumber: '注文番号',
       orderId: '注文ID',
@@ -127,6 +138,44 @@ export default {
       expectedDelivery: '予定配達日',
       actualDelivery: '実際の配達日'
     }
+  },
+
+  // Restocking
+  restocking: {
+    title: '補充発注',
+    description: '予算を設定すると、需要予測に基づいて補充すべき品目が提案されます',
+    budget: '予算',
+    budgetHelp: 'スライダーを動かして使える金額を設定します',
+    recommendedSpend: '推奨支出額',
+    remainingBudget: '残り予算',
+    itemsToOrder: '発注品目数',
+    fullRestockCost: '不足分をすべて補う場合の費用',
+    recommendedItems: '推奨品目',
+    noRecommendations: 'この予算では購入できる品目がありません。予算を増やすと推奨が表示されます。',
+    table: {
+      item: '品目',
+      supplier: 'サプライヤー',
+      trend: '需要トレンド',
+      onHand: '在庫数',
+      forecast: '予測需要（30日）',
+      orderQty: '発注数量',
+      unitCost: '単価',
+      lineCost: '金額',
+      leadTime: 'リードタイム',
+      coverage: '充足状況'
+    },
+    fullyCovered: '不足分を充足',
+    partial: '一部のみ',
+    notFunded: 'この予算では対象外',
+    notFundedHelp: '在庫が不足していますが、予算内に収まらなかった品目です:',
+    shortBy: '不足 {qty}個 @ {price}',
+    placeOrder: '発注する',
+    placingOrder: '発注中...',
+    orderPlaced: '注文 {orderNumber} を受け付けました。納品予定は{days}日後です。',
+    viewInOrders: '注文を表示',
+    orderFailed: '発注できませんでした: {message}',
+    loadFailed: '推奨の読み込みに失敗しました',
+    days: '{count}日'
   },
 
   // Finance/Spending
@@ -206,7 +255,8 @@ export default {
     backordered: 'バックオーダー',
     inStock: '在庫あり',
     lowStock: '在庫僅少',
-    adequate: '適量'
+    adequate: '適量',
+    submitted: '発注済み'
   },
 
   // Trends
@@ -332,6 +382,14 @@ export default {
     'Dual Layer PCB Assembly': '二層PCB組立',
     'Multi Layer PCB Assembly': '多層PCB組立',
     'Temperature Sensor Module': '温度センサーモジュール',
+    // Demand forecast items (shown on the Restocking tab)
+    'Industrial Widget Type A': '産業用ウィジェット タイプA',
+    'Steel Bearing Assembly': 'スチールベアリング組立',
+    'High-Temperature Gasket': '高温用ガスケット',
+    'Electric Motor 5HP': '電動モーター 5HP',
+    'Oil Filter Cartridge': 'オイルフィルターカートリッジ',
+    'Pressure Relief Valve': '圧力逃がし弁',
+    'Logic Controller Board': 'ロジックコントローラーボード',
     'Humidity Sensor Module': '湿度センサーモジュール',
     'Pressure Sensor Module': '圧力センサーモジュール',
     'Proximity Sensor': '近接センサー',
